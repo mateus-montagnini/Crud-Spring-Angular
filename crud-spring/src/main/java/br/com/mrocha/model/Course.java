@@ -34,10 +34,8 @@ public class Course {
     @Column(name = "categoria", length = 100, nullable = false)
     private String category;
 
-    @NotBlank
-    @NotNull
     @Pattern(regexp = "Ativo | Inativo")
-    @Column(name = "status", length = 10, nullable = false)
+    @Column(name = "status", length = 10)
     private String status;
 
 }
