@@ -2,6 +2,7 @@ package br.com.mrocha.controller;
 
 import br.com.mrocha.model.Course;
 import br.com.mrocha.repository.ICourseRepository;
+import br.com.mrocha.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,46 +20,43 @@ import java.util.List;
 public class CourseController {
 
     @Autowired
-    private ICourseRepository courseRepository;
+    private final CourseService service;
+
+    public CourseController(ICourseRepository courseRepository, CourseService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public List<Course> list() {
-        return courseRepository.findAll();
+        return service.list();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Course> findById(@PathVariable("id") @NotNull @Positive Long id) {
-        return courseRepository.findById(id)
+        return service.findById(id)
                 .map(record -> ResponseEntity.ok().body(record))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody @Valid Course course) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(courseRepository.save(course));
+    public Course create(@RequestBody @Valid Course course) {
+        return service.create(course);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Course> update(@PathVariable("id") @NotNull @Positive Long id,
                                          @RequestBody @Valid Course course) {
-        return courseRepository.findById(id)
-                .map(recordFound -> {
-                    recordFound.setName(course.getName());
-                    recordFound.setCategory(course.getCategory());
-                    Course updated = courseRepository.save(recordFound);
-                    return ResponseEntity.ok().body(updated);
-                })
+        return service.update(id, course)
+                .map(recordFound -> ResponseEntity.ok().body(recordFound))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") @NotNull @Positive Long id) {
-        return courseRepository.findById(id)
-                .map(recordFound -> {
-                    courseRepository.deleteById(id);
-                    return ResponseEntity.noContent().<Void>build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+        if (service.delete(id)) {
+            return ResponseEntity.noContent().<Void>build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
