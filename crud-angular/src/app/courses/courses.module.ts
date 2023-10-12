@@ -8,7 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CourseFormComponent } from './containers/course-form/course-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
-import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+// import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 
 
@@ -17,7 +17,7 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
     CoursesComponent,
     CourseFormComponent,
     CoursesListComponent,
-    ConfirmationDialogComponent
+    // ConfirmationDialogComponent
   ],
   imports: [
     CommonModule,

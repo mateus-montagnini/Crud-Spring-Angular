@@ -13,7 +13,7 @@ import { ConfirmationDialogComponent } from '../../../shared/components/confirma
 import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
 import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
 import { Course } from '../../model/course';
-import { CoursePage } from '../../model/course-page';
+// import { CoursePage } from '../../model/course-page';
 import { CoursesService } from '../../services/courses.service';
 
 @Component({
