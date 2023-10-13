@@ -1,5 +1,6 @@
 package br.com.mrocha.controller;
 
+import br.com.mrocha.dto.CourseDTO;
 import br.com.mrocha.model.Course;
 import br.com.mrocha.repository.ICourseRepository;
 import br.com.mrocha.service.CourseService;
@@ -27,24 +28,24 @@ public class CourseController {
     }
 
     @GetMapping
-    public List<Course> list() {
+    public List<CourseDTO> list() {
         return service.list();
     }
 
     @GetMapping("/{id}")
-    public Course findById(@PathVariable("id") @NotNull @Positive Long id) {
+    public CourseDTO findById(@PathVariable("id") @NotNull @Positive Long id) {
         return service.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Course create(@RequestBody @Valid Course course) {
+    public CourseDTO create(@RequestBody @Valid CourseDTO course) {
         return service.create(course);
     }
 
     @PutMapping("/{id}")
-    public Course update(@PathVariable("id") @NotNull @Positive Long id,
-                                         @RequestBody @Valid Course course) {
+    public CourseDTO update(@PathVariable("id") @NotNull @Positive Long id,
+                                         @RequestBody @Valid @NotNull CourseDTO course) {
         return service.update(id, course);
     }
 
