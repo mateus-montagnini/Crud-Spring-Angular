@@ -1,5 +1,7 @@
 package br.com.mrocha.model;
 
+import br.com.mrocha.enums.Category;
+import br.com.mrocha.enums.converters.CategoryConverter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -30,9 +32,9 @@ public class Course {
 
     @NotBlank
     @NotNull
-    @Pattern(regexp = "Back-end | Front-end")
     @Column(name = "categoria", length = 100, nullable = false)
-    private String category;
+    @Convert(converter = CategoryConverter.class)
+    private Category category;
 
     @Pattern(regexp = "Ativo | Inativo")
     @Column(name = "status", length = 10)

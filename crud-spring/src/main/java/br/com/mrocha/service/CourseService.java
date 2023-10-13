@@ -2,6 +2,7 @@ package br.com.mrocha.service;
 
 import br.com.mrocha.dto.CourseDTO;
 import br.com.mrocha.dto.mapper.CourseMapper;
+import br.com.mrocha.enums.Category;
 import br.com.mrocha.exception.RecordNotFoundException;
 import br.com.mrocha.model.Course;
 import br.com.mrocha.repository.ICourseRepository;
@@ -54,7 +55,7 @@ public class CourseService {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     recordFound.setName(course.name());
-                    recordFound.setCategory(course.category());
+                    recordFound.setCategory(Category.FRONTEND);
                     return mapper.toDto(courseRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(id));
     }

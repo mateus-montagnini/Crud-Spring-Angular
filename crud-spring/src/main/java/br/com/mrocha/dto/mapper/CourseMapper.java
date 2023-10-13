@@ -1,6 +1,7 @@
 package br.com.mrocha.dto.mapper;
 
 import br.com.mrocha.dto.CourseDTO;
+import br.com.mrocha.enums.Category;
 import br.com.mrocha.model.Course;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ public class CourseMapper {
             return null;
         }
 
-        return new CourseDTO(course.getId(), course.getName(), course.getCategory());
+        return new CourseDTO(course.getId(), course.getName(), "Front-end");
     }
 
     public Course toEntity(CourseDTO courseDTO) {
@@ -25,7 +26,7 @@ public class CourseMapper {
             course.setId(courseDTO.id());
         }
         course.setName(courseDTO.name());
-        course.setCategory(courseDTO.category());
+        course.setCategory(Category.FRONTEND);
         course.setStatus("Ativo");
         return course;
     }
