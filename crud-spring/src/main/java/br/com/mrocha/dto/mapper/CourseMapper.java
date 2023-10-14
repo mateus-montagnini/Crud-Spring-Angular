@@ -1,9 +1,13 @@
 package br.com.mrocha.dto.mapper;
 
 import br.com.mrocha.dto.CourseDTO;
+import br.com.mrocha.dto.LessonDTO;
 import br.com.mrocha.enums.Category;
 import br.com.mrocha.model.Course;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CourseMapper {
@@ -13,7 +17,13 @@ public class CourseMapper {
             return null;
         }
 
-        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue());
+        List<LessonDTO> lessons = course.getLessons()
+                .stream()
+                .map(lesson -> new LessonDTO(lesson.getId(), lesson.getName(),
+                        lesson.getYoutubeUrl()))
+                .collect(Collectors.toList());
+        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(),
+                lessons);
     }
 
     public Course toEntity(CourseDTO courseDTO) {
