@@ -51,11 +51,14 @@ public class CourseService {
     }
 
     public CourseDTO update(@NotNull @Positive Long id,
-                                   @Valid @NotNull CourseDTO course) {
+                                   @Valid @NotNull CourseDTO courseDTO) {
         return courseRepository.findById(id)
                 .map(recordFound -> {
-                    recordFound.setName(course.name());
-                    recordFound.setCategory(mapper.convertCategoryValue(course.category()));
+                    Course course = mapper.toEntity(courseDTO);
+                    recordFound.setName(courseDTO.name());
+                    recordFound.setCategory(mapper.convertCategoryValue(courseDTO.category()));
+                    recordFound.getLessons().clear();
+                    course.getLessons().forEach(lesson -> recordFound.getLessons().add(lesson));
                     return mapper.toDto(courseRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(id));
     }
