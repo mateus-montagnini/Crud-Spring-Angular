@@ -1,8 +1,11 @@
 package br.com.mrocha.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public record LessonDTO(
         Long id,
-        String name,
-        String youtubeUrl
+        @NotNull @NotBlank String name,
+        @NotNull @NotBlank String youtubeUrl
 ) {
 }
