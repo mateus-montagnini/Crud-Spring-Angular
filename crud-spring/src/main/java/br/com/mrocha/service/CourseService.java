@@ -6,6 +6,7 @@ import br.com.mrocha.enums.Category;
 import br.com.mrocha.exception.RecordNotFoundException;
 import br.com.mrocha.model.Course;
 import br.com.mrocha.repository.ICourseRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class CourseService {
     }
 
     public List<CourseDTO> list() {
-        return courseRepository.findAll()
+        return courseRepository.findAll(PageRequest.of(0, 10))
                 .stream()
                 .map(mapper :: toDto)
                 .collect(Collectors.toList());
